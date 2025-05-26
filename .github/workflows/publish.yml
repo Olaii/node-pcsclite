@@ -18,44 +18,44 @@ jobs:
         arch: [x64]
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@printags'
-      
+          scope: '@olaii'
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build binary
         run: |
           # Print Node.js version information for debugging
           node -v
           node -p "process.versions"
           node -p "process.versions.modules" # This shows the NODE_MODULE_VERSION
-          
+
           # We're building directly with node-pre-gyp instead of npm ci,
           # to make sure we get a binary even if we can't download one
           npx node-pre-gyp rebuild
-          
+
           # Show the built binary
           dir build\Release
-          
+
           # Create proper directory structure for node-pre-gyp package
           mkdir package\build
           mkdir package\build\Release
           copy build\Release\pcsclite.node package\build\Release\
-          
+
           # Create the tarball
           cd package
           tar -czf ..\win32-x64.tar.gz build
           cd ..
-          
+
           # Debug output
           dir *.tar.gz
-      
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -70,22 +70,22 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 23.x
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@printags'
-      
+          scope: '@olaii'
+
       # We don't need to run npm ci here as we don't use any dependencies for this job
       # Just downloading the artifacts and publishing
-      
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
-          
+
       - name: Prepare artifacts
         run: |
           dir artifacts
@@ -96,10 +96,10 @@ jobs:
           mkdir release
           copy artifacts\win32-x64-20.x\win32-x64.tar.gz release\win32-x64-node-v115.tar.gz
           copy artifacts\win32-x64-22.15.1\win32-x64.tar.gz release\win32-x64-node-v127.tar.gz
-          
+
           # Create an additional copy with v123 name for broader compatibility
           copy artifacts\win32-x64-20.x\win32-x64.tar.gz release\win32-x64-node-v123.tar.gz
-      
+
       - name: Create GitHub Release
         id: create_release
         uses: softprops/action-gh-release@v1
@@ -109,7 +109,7 @@ jobs:
             release/win32-x64-node-v115.tar.gz
             release/win32-x64-node-v123.tar.gz
             release/win32-x64-node-v127.tar.gz
-      
+
       - name: Publish to GitHub Packages
         run: npm publish
         env:

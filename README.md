@@ -1,6 +1,6 @@
 # node-pcsclite
 
-[![npm](https://img.shields.io/npm/v/@printags/node-pcsclite.svg)](https://www.npmjs.com/package/@printags/node-pcsclite)
+[![npm](https://img.shields.io/npm/v/@olaii/node-pcsclite.svg)](https://www.npmjs.com/package/@olaii/node-pcsclite)
 [![build status](https://img.shields.io/github/actions/workflow/status/pokusew/node-pcsclite/ci.yml?logo=github)](https://github.com/pokusew/node-pcsclite/actions/workflows/ci.yml)
 [![node-pcsclite channel on discord](https://img.shields.io/badge/discord-join%20chat-61dafb.svg?logo=discord&logoColor=white)](https://discord.gg/bg3yazg)
 
@@ -72,13 +72,13 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 3. **Install node-pcsclite using npm or yarn:**
 
     ```bash
-    npm install @printags/node-pcsclite --save
+    npm install @olaii/node-pcsclite --save
     ```
     
     or using Yarn:
     
     ```bash
-    yarn add @printags/node-pcsclite
+    yarn add @olaii/node-pcsclite
     ```
 
 4. **Building from source (if needed)**
@@ -95,7 +95,7 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 > take a look at [nfc-pcsc](https://github.com/pokusew/nfc-pcsc).
 
 ```javascript
-const pcsclite = require('@printags/node-pcsclite');
+const pcsclite = require('@olaii/node-pcsclite');
 
 const pcsc = pcsclite();
 
@@ -333,14 +333,14 @@ After reboot, there will be no driver blocking the usb bus anymore, so we can fi
 
 ### Which Node.js versions are supported?
 
-@printags/node-pcsclite officially supports the following Node.js versions: **10.x, 12.x, 14.x, 16.x, 18.x, 20.x**.
+@olaii/node-pcsclite officially supports the following Node.js versions: **10.x, 12.x, 14.x, 16.x, 18.x, 20.x**.
 
 ### Can I use this library in my React Native app?
 
 Short answer: **NO**
 
-Explanation: **Mobile support is virtually impossible** because @printags/node-pcsclite uses **Node Native Modules**
-to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @printags/node-pcsclite to run.
+Explanation: **Mobile support is virtually impossible** because @olaii/node-pcsclite uses **Node Native Modules**
+to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @olaii/node-pcsclite to run.
 That makes it possible to use it on the most of OS (Windows, macOS, Linux) **directly in Node.js**
 or in **Electron.js and NW.js** desktop apps. On the other hand, these requirements are not normally met on mobile devices.
 On top of that, React Native does not contain any Node.js runtime.
@@ -350,7 +350,7 @@ On top of that, React Native does not contain any Node.js runtime.
 
 ### Error: Cannot find module '../build/Release/pcsclite.node'
 
-@printags/node-pcsclite uses pre-built binaries via `node-gyp-build` which should avoid this error. However, if you still encounter this issue, it could be due to one of these reasons:
+@olaii/node-pcsclite uses pre-built binaries via `node-gyp-build` which should avoid this error. However, if you still encounter this issue, it could be due to one of these reasons:
 
 1. **No pre-built binary is available for your platform**:
    * In this case, the library tries to build from source using [node-gyp](https://github.com/nodejs/node-gyp)
@@ -358,7 +358,7 @@ On top of that, React Native does not contain any Node.js runtime.
 
 2. **There's an issue with the pre-built binary installation**:
    * Try clearing your npm cache: `npm cache clean --force`
-   * Reinstall the package: `npm uninstall @printags/node-pcsclite && npm install @printags/node-pcsclite`
+   * Reinstall the package: `npm uninstall @olaii/node-pcsclite && npm install @olaii/node-pcsclite`
 
 If the problem persists, [open a new issue](https://github.com/printags/node-pcsclite/issues/new) with details about your platform, OS, Node.js version, and npm/yarn version.
 

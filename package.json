@@ -1,5 +1,5 @@
 {
-  "name": "@printags/node-pcsclite",
+  "name": "@olaii/node-pcsclite",
   "version": "0.8.13",
   "description": "Bindings over PC/SC to access Smart Cards",
   "keywords": [
