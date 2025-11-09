@@ -33,9 +33,9 @@
     "index.d.ts"
   ],
   "scripts": {
-    "install": "node-pre-gyp install || node-pre-gyp rebuild",
-    "rebuild": "node-gyp rebuild",
-    "prebuild": "node-pre-gyp build package"
+    "install": "node-pre-gyp install --fallback-to-build",
+    "rebuild": "node-gyp build",
+    "prebuild": "node-pre-gyp configure build package"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^2.0.0",
