@@ -1,6 +1,6 @@
 {
-  "name": "@nonth/pcsclite",
-  "version": "0.6.2",
+  "name": "@Olaii/pcsclite",
+  "version": "0.6.3",
   "description": "Bindings over PC/SC to access Smart Cards",
   "keywords": [
     "nfc",
@@ -8,16 +8,16 @@
     "pcsclite",
     "smartcards"
   ],
-  "homepage": "https://github.com/nonth/node-pcsclite#readme",
+  "homepage": "https://github.com/Olaii/node-pcsclite#readme",
   "bugs": {
-    "url": "https://github.com/nonth/node-pcsclite/issues"
+    "url": "https://github.com/Olaii/node-pcsclite/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nonth/node-pcsclite.git"
+    "url": "https://github.com/Olaii/node-pcsclite.git"
   },
   "license": "ISC",
-  "author": "nonth <nonthz@gmail.com> (https://github.com/nonth)",
+  "author": "Olaii <info@olaii.com> (https://github.com/Olaii)",
   "main": "lib/pcsclite.js",
   "types": "index.d.ts",
   "directories": {
@@ -33,13 +33,12 @@
     "index.d.ts"
   ],
   "scripts": {
-    "install": "node-gyp rebuild",
-    "test": "mocha --exit",
-    "release": "release-it",
-    "release:dry": "release-it --dry-run",
-    "release:ci": "release-it --ci"
+    "install": "node-pre-gyp install || node-pre-gyp rebuild",
+    "rebuild": "node-gyp rebuild",
+    "prebuild": "node-pre-gyp build package"
   },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^2.0.0",
     "node-addon-api": "^8.0.0"
   },
   "devDependencies": {
@@ -48,6 +47,12 @@
     "release-it": "^19.0.5",
     "should": "^13.2.3",
     "sinon": "^16.0.0"
+  },
+    "binary": {
+    "module_name": "pcsclite",
+    "module_path": "./lib/binding/",
+    "host": "https://github.com/Olaii/node-pcsclite/releases/download/",
+    "remote_path": "{version}"
   },
   "gypfile": true,
   "publishConfig": {

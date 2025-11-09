@@ -1,16 +1,32 @@
 # node-pcsclite
 
-[![npm](https://img.shields.io/npm/v/@nonth/pcsclite.svg)](https://www.npmjs.com/package/@nonth/pcsclite)
-[![build status](https://img.shields.io/github/actions/workflow/status/nonth/node-pcsclite/ci.yml?logo=github)](https://github.com/nonth/node-pcsclite/actions/workflows/ci.yml)
-[![node-pcsclite channel on discord](https://img.shields.io/badge/discord-join%20chat-61dafb.svg?logo=discord&logoColor=white)](https://discord.gg/bg3yazg)
-
 Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** and **Windows**.
 
-> 📌 **Looking for library to work easy with NFC tags?**  
-> Then take a look at [nfc-pcsc](https://github.com/nonth/nfc-pcsc)
-> which offers an easy to use high level API
-> for detecting / reading and writing NFC tags and cards.
+### DEV
 
+On windows you will need to go to `node_modules\@mapbox\node-pre-gyp\lib\util\compile.js` and change the line 80
+from:
+
+```js
+  const cmd = cp.spawn(shell_cmd, final_args, { cwd: undefined, env: process.env, stdio: [0, 1, 2] });
+
+```
+
+to:
+
+```js
+  const cmd = cp.spawn(shell_cmd, final_args, { cwd: undefined, env: process.env, stdio: [0, 1, 2], shell: true });
+```
+
+Adding the `shell: true` so it works on Node 24 LTS version.
+
+
+To create prebuilt binaries for NW.js run:
+
+```bash
+npm run prebuild --runtime=node-webkit --target=0.105.0 --target_arch=ia32
+npm run prebuild --runtime=node-webkit --target=0.105.0 --target_arch=x64
+```
 
 ## Content
 
@@ -81,24 +97,16 @@ Bindings over pcsclite to access Smart Cards. It works in **Linux**, **macOS** a
 
 3. **Once you have all needed libraries, you can install node-pcsclite using npm:**
 
-    ```bash
-    npm install @nonth/pcsclite --save
-    ```
-    
-    or using Yarn:
-    
-    ```bash
-    yarn add @nonth/pcsclite
-    ```
+```bash
+npm install github:Olaii/node-pcsclite
+```
 
 
 ## Example
 
-> 👉 **If you'd prefer an easy to use high level API** for detecting / reading and writing NFC tags and cards,
-> take a look at [nfc-pcsc](https://github.com/nonth/nfc-pcsc).
 
 ```javascript
-const pcsclite = require('@nonth/pcsclite');
+const pcsclite = require('@Olaii/pcsclite');
 
 const pcsc = pcsclite();
 
@@ -333,16 +341,15 @@ After reboot, there will be no driver blocking the usb bus anymore, so we can fi
 
 ### Which Node.js versions are supported?
 
-@nonth/pcsclite officially supports the following Node.js versions: **18.x, 20.x, 22.x** (LTS versions).
+@Olaii/pcsclite officially supports the following Node.js versions: **24.x** (LTS versions).
 
-Older versions (8.x through 16.x) have reached end-of-life and are no longer supported.
 
 ### Can I use this library in my React Native app?
 
 Short answer: **NO**
 
-Explanation: **Mobile support is virtually impossible** because @nonth/pcsclite uses **Node Native Modules**
-to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @nonth/pcsclite to run.
+Explanation: **Mobile support is virtually impossible** because @Olaii/pcsclite uses **Node Native Modules**
+to access system **PC/SC API**. So the **Node.js runtime and PC/SC API** are required for @Olaii/pcsclite to run.
 That makes it possible to use it on the most of OS (Windows, macOS, Linux) **directly in Node.js**
 or in **Electron.js and NW.js** desktop apps. On the other hand, these requirements are not normally met on mobile devices.
 On top of that, React Native does not contain any Node.js runtime.
@@ -352,26 +359,26 @@ On top of that, React Native does not contain any Node.js runtime.
 
 ### Error: Cannot find module '../build/Release/pcsclite.node'
 
-@nonth/pcsclite uses **Node Native Modules** (Node.js C++ Addon) to access PC/SC API (pcsclite).
+@Olaii/pcsclite uses **Node Native Modules** (Node.js C++ Addon) to access PC/SC API (pcsclite).
 The Node.js native C++ addon is built during installation via [node-gyp](https://github.com/nodejs/node-gyp)
-(see package.json > scripts > [install](https://github.com/nonth/node-pcsclite/blob/master/package.json#L37)).
+(see package.json > scripts > [install](https://github.com/Olaii/node-pcsclite/blob/master/package.json#L37)).
 When you see the error `Cannot find module '../build/Release/pcsclite.node'`, something probably
 **went wrong during the installation**.
 
 Follow the steps below to resolve your problem:
 1. If **there are any errors** in the output of the `npm install` resp. `yarn install`,
     * **ensure you meet all the requirements** described in the [Installation](#installation) section of this README.
-        Then try reinstalling @nonth/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
-    * **If the problem persists**, [open a new issue](https://github.com/nonth/node-pcsclite/issues/new)
+        Then try reinstalling @Olaii/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
+    * **If the problem persists**, [open a new issue](https://github.com/Olaii/node-pcsclite/issues/new)
         and be sure to include the output of the `npm install` resp. `yarn install`
         and the details about your platform, OS, Node.js version and npm/yarn version.
 2. If **there are no errors** during the installation,
-    * then try reinstalling @nonth/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
-    * If it does not help, then examine the contents of the folder `node_modules/@nonth/pcsclite` in your project
-        (in case you installed @nonth/pcsclite as a dependency). There should be a `build` folder with
+    * then try reinstalling @Olaii/pcsclite (npm uninstall / yarn remove and then npm install / yarn add).
+    * If it does not help, then examine the contents of the folder `node_modules/@Olaii/pcsclite` in your project
+        (in case you installed @Olaii/pcsclite as a dependency). There should be a `build` folder with
         a `Release` folder inside. In the `Release` folder, there should be a `pcsclite.node` file.
         It is possible that this file is somewhere else. Whether you find the file somewhere or not,
-        please [open a new issue](https://github.com/nonth/node-pcsclite/issues/new)
+        please [open a new issue](https://github.com/Olaii/node-pcsclite/issues/new)
         and describe the problem and be sure to include the details
         about your platform, OS, Node.js version and npm/yarn version.
 
